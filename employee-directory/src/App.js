@@ -72,6 +72,7 @@ function App() {
       birtdDate: '04/18/1996'
     }
   ];
+  
   const [stateObj, setState] = useState({
     employees: originalList,
     sortByName: {
@@ -79,11 +80,53 @@ function App() {
       direction: true
     }
   });
+  let unsortedOriginal=originalList;
+  const sortByHandler = () =>{
+    if(stateObj.sortByName.shouldSort === false){
+      let unsortedArray = stateObj.employees;
+      let sortedArray = unsortedArray.sort((a,b)=>{
+        var textA = a.name.toUpperCase();
+        var textB = b.name.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      })
+      setState({
+        employees: sortedArray,
+        sortByName:{
+          shouldSort:true,
+          direction:true
+        }
+      })
+    }
+    else if(stateObj.sortByName.shouldSort && stateObj.sortByName.direction){
+      let unsortedArray = stateObj.employees;
+      let sortedArray = unsortedArray.sort((a,b)=>{
+        var textA = a.name.toUpperCase();
+        var textB = b.name.toUpperCase();
+        return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+      })
+      setState({
+        employees: sortedArray,
+        sortByName:{
+          shouldSort:true,
+          direction:false
+        }
+      })
+    }
+    else if(stateObj.sortByName.shouldSort && !stateObj.sortByName.direction){
+      setState({
+        employees: unsortedOriginal,
+        sortByName: {
+          shouldSort:false,
+          direction:true
+        }
+      })
+    }
+  }
 
   const employeeFilterHandler = (event) => {
+    console.log('changed')
     if (event.target.value) {
-
-      let filteredList = stateObj.employees.filter(employee => employee.name.includes(event.target.value));
+      let filteredList = originalList.filter(employee => employee.name.toLowerCase().includes(event.target.value.toLowerCase()));
       setState({
         employees:filteredList,
         sortByName: stateObj.sortByName
@@ -124,6 +167,7 @@ function App() {
 
       <DirectoryWindow
         employees={stateObj.employees}
+        clicked={()=> sortByHandler}
       />
     </div>
   );

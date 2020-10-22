@@ -2,7 +2,7 @@ import React from 'react';
 import Employees from '../Employees/Employees';
 import './directoryWindow.css';
 import 'materialize-css';
-import { Table } from 'react-materialize';
+import { Button, Table } from 'react-materialize';
 
 const directoryWindow = (props) => {
 
@@ -12,16 +12,24 @@ const directoryWindow = (props) => {
                 <thead>
                     <tr>
                         <th data-field="name">
-                            Name
+                            <Button flat node="button" waves='light' onClick={props.clicked()}>
+                                Name
+                            </Button>
                         </th>
                         <th data-field="email">
-                            Email
+                            <Button flat node="button" waves='light'>
+                                Email
+                            </Button>
                         </th>
                         <th data-field="phone">
-                            Phone
+                            <Button flat node="button" waves='light'>
+                                Phone
+                            </Button>
                         </th>
                         <th data-field="start">
-                            Start Date
+                            <Button flat node="button" waves='light'>
+                                Start Date
+                            </Button>
                         </th>
                     </tr>
                 </thead>

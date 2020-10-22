@@ -1,5 +1,4 @@
 import React from 'react';
-import './Employee.css';
 import 'materialize-css';
 
 const employee = (props) => {
